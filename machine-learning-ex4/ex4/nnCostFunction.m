@@ -83,22 +83,28 @@ J = J+reg;
 for(t = 1:1:m )
   yt = y_(t,:);
   a1 = X(t,:);
-  a1 = [1, a1];
-  z2_ = Theta1_*a1';
-  a2_ = sigmoid(z2_)';
-  a2_ = [1, a2_];
-  z3_ = Theta2_*a2_';
-  a3_ = sigmoid(z3_)';
+  %a1 = [1, a1];
+  z2 = Theta1*a1';
+  a2 = sigmoid(z2)';
+  a2 = [1, a2];
+  z3 = Theta2*a2';
+  a3 = sigmoid(z3);
   
-  delta3 = a3_-yt;
-  delta2 = (Theta2_(:,2:end))'*delta3'.*sigmoidGradient(z2_);
+  delta3 = a3-yt';
+  delta2 = (Theta2(:,2:end-1))'*delta3.*(sigmoid(z2).*(1-sigmoid(z2)));
   
+  %delta2 = delta2(2:end);
+  
+  Theta1_grad = Theta1_grad + delta2*a1;
+  Theta2_grad = Theta2_grad + delta3*a2;
   
 end
 
 
 
+Theta1_grad = Theta1_grad/m;
 
+Theta2_grad = Theta2_grad/m;
 
 
 
