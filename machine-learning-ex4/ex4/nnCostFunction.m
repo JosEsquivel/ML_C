@@ -91,7 +91,7 @@ for(t = 1:1:m )
   a3 = sigmoid(z3);
   
   delta3 = a3-yt';
-  delta2 = (Theta2(:,2:end-1))'*delta3.*(sigmoid(z2).*(1-sigmoid(z2)));
+  delta2 = (Theta2(:,2:end))'*delta3.*(sigmoid(z2).*(1-sigmoid(z2)));
   
   %delta2 = delta2(2:end);
   
@@ -101,10 +101,12 @@ for(t = 1:1:m )
 end
 
 
+Mat1 = [zeros(hidden_layer_size,1), ones(hidden_layer_size,input_layer_size)];
+Mat2 = [zeros(num_labels,1), ones(num_labels,hidden_layer_size)];
 
-Theta1_grad = Theta1_grad/m;
+Theta1_grad = Theta1_grad/m + (lambda/m)*Theta1.*Mat1;
 
-Theta2_grad = Theta2_grad/m;
+Theta2_grad = Theta2_grad/m + (lambda/m)*Theta2.*Mat2;
 
 
 
