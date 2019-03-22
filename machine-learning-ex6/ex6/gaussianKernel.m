@@ -16,6 +16,9 @@ sim = 0;
 %
 %
 
+val = x1-x2;
+val2 = sqrt(val'*val);
+sim = exp(-((val2).^2)/(2*sigma^2));
 
 
 
